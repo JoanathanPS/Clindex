@@ -32,3 +32,4 @@ data/redis/
 Thumbs.db
 .idea/
 .vscode/
+.agents/
