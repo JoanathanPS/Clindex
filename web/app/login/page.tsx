@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import { LoginForm } from "@/components/login-form";
 
 export const metadata: Metadata = {
@@ -10,9 +12,18 @@ export default function LoginPage() {
   return (
     <div className="flex flex-1 items-center justify-center px-4 py-16">
       <div className="w-full max-w-sm">
-        <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold tracking-[0.2em]">CLINDEX</h1>
-          <p className="mt-2 text-sm text-ink/60">
+        <div className="mb-8 text-center flex flex-col items-center">
+          <Link href="/" className="inline-block hover:opacity-85 transition-opacity">
+            <Image
+              src="/clindex-logo.png"
+              alt="ClinDex"
+              width={180}
+              height={73}
+              priority
+              className="h-12 w-auto object-contain mx-auto"
+            />
+          </Link>
+          <p className="mt-3 text-xs text-ink/60">
             AI-assisted drug interaction check
           </p>
         </div>

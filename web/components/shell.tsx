@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
@@ -19,9 +20,16 @@ export function Shell({ email, role }: { email: string; role?: string | null }) 
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
         <Link
           href="/patients"
-          className="text-sm font-bold tracking-[0.2em]"
+          className="flex items-center hover:opacity-85 transition-opacity"
         >
-          CLINDEX
+          <Image
+            src="/clindex-logo.png"
+            alt="ClinDex"
+            width={88}
+            height={36}
+            priority
+            className="h-7 w-auto object-contain"
+          />
         </Link>
         <nav className="flex items-center gap-6 text-sm">
           <Link href="/patients" className="hover:text-accent">

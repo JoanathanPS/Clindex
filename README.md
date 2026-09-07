@@ -1,4 +1,8 @@
-# Clindex
+<p align="center">
+  <img src="./web/public/clindex-logo.png" alt="ClinDex Logo" width="300" />
+</p>
+
+# ClinDex
 
 > AI-assisted prescription validation and clinical decision support system.  
 > **Live App**: [https://clindex.joanathan.in](https://clindex.joanathan.in)
