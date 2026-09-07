@@ -1,7 +1,7 @@
 @echo off
 setlocal
 REM ============================================================================
-REM  RxGuard one-click launcher (Windows) - Phase 2+ architecture.
+REM  Clindex one-click launcher (Windows) - Phase 2+ architecture.
 REM  Starts the Next.js app in `web/` (cloud Supabase + Edge Functions are
 REM  already live - no local backend needed) and opens the browser.
 REM ============================================================================

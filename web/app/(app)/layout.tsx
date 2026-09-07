@@ -1,3 +1,4 @@
+import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { Shell } from "@/components/shell";
 
@@ -13,15 +14,19 @@ export default async function AppLayout({
     data: { user },
   } = await supabase.auth.getUser();
 
+  if (!user) {
+    redirect("/login");
+  }
+
   const { data: profile } = await supabase
     .from("profiles")
     .select("email, display_name, role")
-    .eq("id", user!.id)
+    .eq("id", user.id)
     .single();
 
   return (
     <>
-      <Shell email={profile?.email ?? user!.email ?? "user"} role={profile?.role} />
+      <Shell email={profile?.email ?? user.email ?? "user"} role={profile?.role} />
       <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
         {children}
       </main>

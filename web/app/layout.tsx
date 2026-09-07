@@ -20,8 +20,8 @@ const jetbrainsMono = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "RxGuard",
-    template: "%s · RxGuard",
+    default: "Clindex",
+    template: "%s · Clindex",
   },
   description:
     "AI-assisted drug interaction check. Research/educational capstone — not a certified medical device.",

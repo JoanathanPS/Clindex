@@ -21,7 +21,7 @@ export function Shell({ email, role }: { email: string; role?: string | null }) 
           href="/patients"
           className="text-sm font-bold tracking-[0.2em]"
         >
-          RXGUARD
+          CLINDEX
         </Link>
         <nav className="flex items-center gap-6 text-sm">
           <Link href="/patients" className="hover:text-accent">
