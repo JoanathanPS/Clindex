@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./web/public/clindex-logo.png" alt="ClinDex Logo" width="300" />
+  <img src="./web/public/clindex-device-hero-mono.png" alt="ClinDex Logo" width="380" />
 </p>
 
 # ClinDex

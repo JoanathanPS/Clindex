@@ -86,14 +86,14 @@ export default function HomePage() {
       {/* 2. Hero Section */}
       <section className="border-b border-ink/10 py-16 sm:py-24">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 text-center">
-          <div className="flex justify-center mb-5">
+          <div className="flex justify-center mb-6">
             <Image
-              src="/clindex-logo.png"
-              alt="ClinDex"
-              width={240}
-              height={98}
+              src="/clindex-device-hero-mono.png"
+              alt="ClinDex - Clinical Knowledge, In Your Hands"
+              width={340}
+              height={183}
               priority
-              className="h-14 sm:h-18 w-auto object-contain"
+              className="h-24 sm:h-32 md:h-40 w-auto object-contain drop-shadow-sm hover:scale-[1.01] transition-transform"
             />
           </div>
 
