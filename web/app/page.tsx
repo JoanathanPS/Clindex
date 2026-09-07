@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
 
 export const metadata = {
   title: "Clindex · Prescription Safety & Interaction Validation",
@@ -30,12 +29,7 @@ function GoogleIcon({ className = "h-3.5 w-3.5" }: { className?: string }) {
   );
 }
 
-export default async function HomePage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+export default function HomePage() {
   return (
     <div className="flex min-h-screen flex-col bg-canvas text-ink font-mono selection:bg-ink selection:text-canvas">
       {/* 1. Nav Bar */}
@@ -64,30 +58,19 @@ export default async function HomePage() {
           </nav>
 
           <div className="flex items-center gap-3">
-            {user ? (
-              <Link
-                href="/patients"
-                className="rounded border border-ink bg-ink px-3 py-1 text-xs font-medium text-canvas hover:bg-ink/90 transition-colors"
-              >
-                workspace →
-              </Link>
-            ) : (
-              <>
-                <Link
-                  href="/login"
-                  className="text-xs text-ink/70 hover:text-ink px-2 py-1 transition-colors"
-                >
-                  sign in
-                </Link>
-                <Link
-                  href="/login"
-                  className="flex items-center gap-1.5 rounded border border-ink/25 bg-card/60 px-2.5 py-1 text-xs hover:border-ink hover:bg-card transition-all"
-                >
-                  <GoogleIcon />
-                  <span>Google</span>
-                </Link>
-              </>
-            )}
+            <Link
+              href="/login"
+              className="text-xs text-ink/70 hover:text-ink px-2 py-1 transition-colors"
+            >
+              sign in
+            </Link>
+            <Link
+              href="/login"
+              className="flex items-center gap-1.5 rounded border border-ink/25 bg-card/60 px-2.5 py-1 text-xs hover:border-ink hover:bg-card transition-all"
+            >
+              <GoogleIcon />
+              <span>Google</span>
+            </Link>
           </div>
         </div>
       </header>
@@ -105,10 +88,10 @@ export default async function HomePage() {
 
           <div className="mt-7 flex flex-wrap items-center justify-center gap-3">
             <Link
-              href={user ? "/patients" : "/login"}
+              href="/login"
               className="rounded border border-ink bg-ink px-5 py-2 text-xs font-semibold text-canvas hover:bg-ink/90 active:translate-y-px transition-all"
             >
-              {user ? "open workspace →" : "start check →"}
+              start check →
             </Link>
             <a
               href="#benchmarks"
@@ -344,10 +327,7 @@ export default async function HomePage() {
               [ THE AUTHOR&apos;S NOTE ]
             </div>
             <p className="text-xs sm:text-sm text-ink/85 leading-relaxed">
-              I built Clindex because reviewing complex prescriptions shouldn&apos;t mean cross-referencing five dense formulary PDFs at 1am while drowning in false-alarm alerts from legacy hospital software. In clinical pharmacology, the medicine was never the confusing part — catching the subtle, patient-specific interactions hidden in an eGFR lab value or an unmentioned OTC drug was.
-            </p>
-            <p className="text-xs sm:text-sm text-ink/75 leading-relaxed">
-              Every interaction Clindex flags is grounded directly in clinical reference datasets with transparent biological mechanisms and actionable alternatives — because a clinical safety tool that can&apos;t explain its reasoning isn&apos;t one you should trust with a patient. It stays out of your way, focuses on what matters, and was built to solve a real clinical problem, not just demo an AI prompt.
+              I built Clindex because catching dangerous drug interactions shouldn&apos;t mean drowning in alert fatigue or deciphering dense formularies at 1am. Every interaction is grounded in clinical datasets with transparent biological mechanisms and actionable alternatives — built to solve a real clinical problem, not just demo an AI prompt.
             </p>
             <div className="pt-2 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-t border-ink/10 text-xs">
               <span className="font-bold text-ink">Joanathan Packia Singh</span>
