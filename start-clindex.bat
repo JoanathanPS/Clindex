@@ -21,7 +21,7 @@ REM ---- 2. Env files present? -------------------------------------------------
 if not exist "web\.env.local" (
     echo [WARNING] web\.env.local is missing.
     echo            Copy web\.env.example to web\.env.local and fill in:
-    echo              NEXT_PUBLIC_SUPABASE_URL      = https://rfemgzedvjpwaeivfjhn.supabase.co
+    echo              NEXT_PUBLIC_SUPABASE_URL      = https://<project-ref>.supabase.co
     echo              NEXT_PUBLIC_SUPABASE_ANON_KEY = your anon key
     echo              SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY = server-side eval creds
     echo.
