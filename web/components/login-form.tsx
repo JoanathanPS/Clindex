@@ -53,6 +53,17 @@ export function LoginForm() {
 
   // 1. Google OAuth
   async function handleGoogleSignIn() {
+    const isConfigured =
+      process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder");
+
+    if (!isConfigured) {
+      setError(
+        "Supabase credentials not configured in Vercel. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel Project Settings > Environment Variables.",
+      );
+      return;
+    }
+
     setError(null);
     setPendingOAuth(true);
 
@@ -77,6 +88,18 @@ export function LoginForm() {
   // 2. Passwordless Magic Link (via Resend SMTP)
   async function handleMagicLink(e: React.FormEvent) {
     e.preventDefault();
+
+    const isConfigured =
+      process.env.NEXT_PUBLIC_SUPABASE_URL &&
+      !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder");
+
+    if (!isConfigured) {
+      setError(
+        "Supabase credentials not configured in Vercel. Please add NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY in Vercel Project Settings > Environment Variables.",
+      );
+      return;
+    }
+
     if (!email) {
       setError("Please enter your email address.");
       return;
@@ -105,8 +128,21 @@ export function LoginForm() {
     }
   }
 
+  const isConfigured =
+    process.env.NEXT_PUBLIC_SUPABASE_URL &&
+    !process.env.NEXT_PUBLIC_SUPABASE_URL.includes("placeholder");
+
   return (
     <div className="space-y-4 text-ink">
+      {!isConfigured && (
+        <div className="rounded border border-amber-500/40 bg-amber-500/10 p-3 text-xs text-amber-700 dark:text-amber-300">
+          <p className="font-semibold">Vercel Setup Required</p>
+          <p className="mt-1 leading-relaxed">
+            Missing environment variables. Please add <code className="font-mono font-bold">NEXT_PUBLIC_SUPABASE_URL</code> and <code className="font-mono font-bold">NEXT_PUBLIC_SUPABASE_ANON_KEY</code> in Vercel Project Settings &gt; Environment Variables.
+          </p>
+        </div>
+      )}
+
       {/* Continue with Google */}
       <Button
         type="button"
