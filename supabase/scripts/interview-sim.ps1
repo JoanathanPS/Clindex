@@ -15,7 +15,8 @@ param(
     [string]$Password = "DevTest123!"
 )
 
-$envFile = Join-Path $PSScriptRoot "..\..\.env"
+$envFile = Join-Path $PSScriptRoot "..\..\web\.env.local"
+if (-not (Test-Path $envFile)) { $envFile = Join-Path $PSScriptRoot "..\..\.env" }
 $anon = (Get-Content $envFile | Where-Object { $_ -match '^SUPABASE_ANON_KEY=' }) -replace '^SUPABASE_ANON_KEY=', ''
 $url  = (Get-Content $envFile | Where-Object { $_ -match '^SUPABASE_URL=' }) -replace '^SUPABASE_URL=', ''
 

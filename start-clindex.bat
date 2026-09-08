@@ -26,11 +26,7 @@ if not exist "web\.env.local" (
     echo              SUPABASE_URL / SUPABASE_SERVICE_ROLE_KEY = server-side eval creds
     echo.
 )
-if not exist ".env" (
-    echo [WARNING] .env is missing at the repo root ^(Management API token for
-    echo            supabase scripts^). The app still runs without it.
-    echo.
-)
+
 
 REM ---- 3. Dependencies --------------------------------------------------------
 echo [1/3] Checking web dependencies...

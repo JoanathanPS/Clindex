@@ -9,12 +9,13 @@ param(
     [Parameter(Mandatory = $true)][string]$SqlFile
 )
 
-$envFile = Join-Path $PSScriptRoot "..\..\.env"
+$envFile = Join-Path $PSScriptRoot "..\..\web\.env.local"
+if (-not (Test-Path $envFile)) { $envFile = Join-Path $PSScriptRoot "..\..\.env" }
 $pat = (Get-Content $envFile | Where-Object { $_ -match '^SUPABASE_ACCESS_TOKEN=' }) -replace '^SUPABASE_ACCESS_TOKEN=', ''
 $ref = (Get-Content $envFile | Where-Object { $_ -match '^SUPABASE_PROJECT_REF=' }) -replace '^SUPABASE_PROJECT_REF=', ''
 if (-not $ref) { $ref = "rfemgzedvjpwaeivfjhn" }
 
-if (-not $pat) { throw "SUPABASE_ACCESS_TOKEN missing from .env" }
+if (-not $pat) { throw "SUPABASE_ACCESS_TOKEN missing from web\.env.local" }
 
 $sql = [System.IO.File]::ReadAllText((Resolve-Path $SqlFile), [System.Text.Encoding]::UTF8)
 $body = @{ query = $sql } | ConvertTo-Json

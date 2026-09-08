@@ -12,9 +12,12 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+const envFilePath = fs.existsSync(path.join(root, "web", ".env.local"))
+  ? path.join(root, "web", ".env.local")
+  : path.join(root, ".env");
 const env = Object.fromEntries(
   fs
-    .readFileSync(path.join(root, ".env"), "utf8")
+    .readFileSync(envFilePath, "utf8")
     .split(/\r?\n/)
     .filter((l) => l.includes("="))
     .map((l) => {
