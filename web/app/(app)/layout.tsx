@@ -25,14 +25,15 @@ export default async function AppLayout({
     .single();
 
   return (
-    <>
+    <div className="relative flex min-h-dvh flex-col overflow-hidden bg-canvas">
+      <div className="page-grid" aria-hidden="true" />
       <Shell email={profile?.email ?? user.email ?? "user"} role={profile?.role} />
-      <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8">
+      <main className="relative z-10 mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6">
         {children}
       </main>
-      <footer className="border-t border-ink/15 py-4 text-center text-xs text-ink/50">
+      <footer className="relative z-10 border-t-2 border-ink bg-card py-4 text-center text-[10px] font-bold uppercase tracking-[.1em] text-ink/55">
         Research/educational capstone — not a certified medical device
       </footer>
-    </>
+    </div>
   );
 }

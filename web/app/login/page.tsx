@@ -10,9 +10,10 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
   return (
-    <div className="flex flex-1 items-center justify-center px-4 py-16">
+    <div className="relative flex flex-1 items-center justify-center overflow-hidden bg-canvas px-4 py-16">
+      <div className="page-grid" aria-hidden="true" />
       <div className="w-full max-w-sm">
-        <div className="mb-8 text-center flex flex-col items-center">
+        <div className="relative z-10 mb-8 flex flex-col items-center text-center">
           <Link href="/" className="inline-block hover:opacity-85 transition-opacity">
             <Image
               src="/clindex-logo.png"
@@ -27,12 +28,12 @@ export default function LoginPage() {
             AI-assisted drug interaction check
           </p>
         </div>
-        <div className="rounded border border-ink/20 p-6">
+        <div className="relative z-10 app-surface p-6">
           <Suspense fallback={<div className="py-4 text-center text-xs text-ink/50">Loading…</div>}>
             <LoginForm />
           </Suspense>
         </div>
-        <p className="mt-6 text-center text-xs leading-relaxed text-ink/50">
+        <p className="relative z-10 mt-6 text-center text-xs leading-relaxed text-ink/50">
           Research/educational capstone — not a certified medical device.
           <br />
           Output is decision support only.

@@ -102,7 +102,7 @@ export function AssessmentView({ prescriptionId }: { prescriptionId: string }) {
 
   if ((assessments ?? []).length === 0) {
     return (
-      <div className="mx-auto max-w-2xl rounded border border-dashed border-ink/30 px-6 py-12 text-center">
+      <div className="app-surface mx-auto max-w-2xl border-dashed px-6 py-12 text-center">
         <h2 className="text-sm font-bold uppercase tracking-wider text-ink/60">
           Safety assessment
         </h2>
@@ -127,7 +127,7 @@ export function AssessmentView({ prescriptionId }: { prescriptionId: string }) {
   return (
     <div className="space-y-8">
       {summary && (
-        <div className="rounded border border-ink/20 bg-canvas p-6">
+        <div className="app-surface p-6">
           <h2 className="text-xs font-bold uppercase tracking-wider text-ink/60">
             Combined summary
           </h2>
@@ -143,7 +143,7 @@ export function AssessmentView({ prescriptionId }: { prescriptionId: string }) {
           {(assessments ?? []).map((a) => (
             <div
               key={a.drug_name}
-              className="rounded border border-ink/20 bg-canvas p-5"
+              className="app-panel p-5"
             >
               <div className="flex items-center justify-between gap-4">
                 <h3 className="text-lg font-bold capitalize">{a.drug_name}</h3>
@@ -185,7 +185,7 @@ export function AssessmentView({ prescriptionId }: { prescriptionId: string }) {
             {interactions.map((i) => (
               <div
                 key={`${i.drug_a}+${i.drug_b}`}
-                className="rounded border border-ink/20 bg-canvas p-5"
+                className="app-panel p-5"
               >
                 <div className="flex items-center justify-between gap-4">
                   <h3 className="text-sm font-bold capitalize">

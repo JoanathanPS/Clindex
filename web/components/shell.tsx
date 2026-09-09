@@ -16,8 +16,8 @@ export function Shell({ email, role }: { email: string; role?: string | null }) 
   }
 
   return (
-    <header className="border-b border-ink/15">
-      <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-4">
+    <header className="relative z-10 border-b-2 border-ink bg-card">
+      <div className="mx-auto flex min-h-16 max-w-6xl items-center justify-between gap-4 px-4 py-3">
         <Link
           href="/patients"
           className="flex items-center hover:opacity-85 transition-opacity"
@@ -31,19 +31,19 @@ export function Shell({ email, role }: { email: string; role?: string | null }) 
             className="h-7 w-auto object-contain"
           />
         </Link>
-        <nav className="flex items-center gap-6 text-sm">
+        <nav className="flex items-center gap-3 text-xs font-bold uppercase tracking-[.1em]">
           <Link href="/patients" className="hover:text-accent">
-            Patients
+            Records
           </Link>
           {role === "researcher" || role === "admin" ? (
             <Link href="/eval" className="hover:text-accent">
               Evaluation
             </Link>
           ) : null}
-          <span className="text-ink/50">{email}</span>
+          <span className="hidden max-w-40 truncate text-ink/50 md:inline">{email}</span>
           <button
             onClick={signOut}
-            className="rounded border border-ink/30 px-3 py-1 text-sm hover:bg-card"
+            className="control-button border-2 bg-canvas px-3 py-1 text-xs hover:bg-[#e9e2d3]"
           >
             Sign out
           </button>

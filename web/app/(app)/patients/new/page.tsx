@@ -9,12 +9,13 @@ export default function NewPatientPage() {
   return (
     <div className="max-w-xl space-y-6">
       <div>
-        <h1 className="text-xl font-bold">New patient</h1>
+        <p className="console-label">Profile intake</p>
+        <h1 className="mt-1 text-2xl font-black">New patient</h1>
         <p className="mt-1 text-sm text-ink/60">
           The interview will fill in the rest later — add what you know now.
         </p>
       </div>
-      <div className="rounded border border-ink/20 p-6">
+      <div className="app-surface p-6 sm:p-7">
         <PatientForm />
       </div>
     </div>

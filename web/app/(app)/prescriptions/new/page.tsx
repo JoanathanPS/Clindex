@@ -31,7 +31,8 @@ export default async function NewPrescriptionPage({
     <div className="max-w-3xl space-y-6">
       <div className="flex items-start justify-between">
         <div>
-          <h1 className="text-xl font-bold">New prescription</h1>
+          <p className="console-label">Medication scan</p>
+          <h1 className="mt-1 text-2xl font-black">New prescription</h1>
           <p className="mt-1 text-sm text-ink/60">
             For <Link href={`/patients/${patientRow.id}`} className="text-accent underline underline-offset-4">{patientRow.name}</Link>
           </p>

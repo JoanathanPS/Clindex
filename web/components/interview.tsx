@@ -103,7 +103,7 @@ export function Interview({ prescriptionId, patientName, drugs, sessionId }: Pro
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-1 flex-col justify-center"
         >
-          <div className="rounded border border-ink/20 bg-canvas p-8">
+          <div className="app-surface p-8">
             <p className="text-xs font-bold uppercase tracking-wider text-ink/60">
               Safety interview · {patientName}
             </p>
@@ -114,7 +114,7 @@ export function Interview({ prescriptionId, patientName, drugs, sessionId }: Pro
               {drugs.map((d) => (
                 <li
                   key={d.drug_name}
-                  className="rounded bg-card px-3 py-1 text-xs text-ink/80"
+                  className="rounded-full border border-ink/30 bg-[#e9e2d3] px-3 py-1 text-xs text-ink/80"
                 >
                   {d.drug_name}
                 </li>
@@ -204,7 +204,7 @@ export function Interview({ prescriptionId, patientName, drugs, sessionId }: Pro
           animate={{ opacity: 1, y: 0 }}
           className="flex flex-1 flex-col justify-center"
         >
-          <div className="rounded border border-ink/20 bg-canvas p-8">
+          <div className="app-surface p-8">
             <p className="text-xs font-bold uppercase tracking-wider text-success">
               Interview complete
             </p>

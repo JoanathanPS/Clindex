@@ -1,7 +1,7 @@
 import type { InputHTMLAttributes, SelectHTMLAttributes } from "react";
 
 export const inputClass =
-  "w-full rounded border border-ink/30 bg-canvas px-3 py-2 text-sm placeholder:text-ink/40 focus:border-accent";
+  "field-input placeholder:text-ink/40";
 
 export function Field({
   label,
@@ -16,7 +16,7 @@ export function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-xs font-medium text-ink/70">{label}</span>
+      <span className="console-label mb-2 block">{label}</span>
       {children}
       {hint && !error && (
         <span className="mt-1 block text-xs text-ink/50">{hint}</span>
