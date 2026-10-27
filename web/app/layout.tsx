@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type LayoutProps from "next";
 import localFont from "next/font/local";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 const jetbrainsMono = localFont({
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" className={`${jetbrainsMono.variable} h-full antialiased`}>
       <body className="flex min-h-dvh flex-col bg-canvas text-ink">
         {children}
+        <Analytics />
       </body>
     </html>
   );
