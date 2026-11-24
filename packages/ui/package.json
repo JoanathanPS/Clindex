@@ -1,0 +1,14 @@
+{
+  "name": "@clindex/ui",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "ClinDex Pokédex design system: device shell, LCD screen and shared styles.",
+  "exports": {
+    ".": "./src/index.ts",
+    "./pokedex.css": "./src/pokedex.css"
+  },
+  "peerDependencies": {
+    "react": ">=19"
+  }
+}

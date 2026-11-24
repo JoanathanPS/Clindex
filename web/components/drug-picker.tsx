@@ -19,6 +19,7 @@ export function DrugPicker({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const rootRef = useRef<HTMLDivElement>(null);
+  const visibleMatches = value.trim() ? matches : [];
 
   useEffect(() => {
     let cancelled = false;
@@ -46,22 +47,19 @@ export function DrugPicker({
 
   useEffect(() => {
     const q = value.trim().toLowerCase();
-    if (!q) {
-      setMatches([]);
-      return;
-    }
+    if (!q) return;
 
     let cancelled = false;
-    setLoading(true);
 
     const timer = setTimeout(async () => {
+      if (!cancelled) setLoading(true);
       try {
         const [ctRes, rxRes] = await Promise.all([
           fetch(`https://clinicaltables.nlm.nih.gov/api/rxterms/v3/search?terms=${encodeURIComponent(q)}&ef=RXCUIS`),
           fetch(`https://rxnav.nlm.nih.gov/REST/approximateTerm.json?term=${encodeURIComponent(q)}&maxEntries=4`)
         ]);
         
-        let results: Array<{name: string, rxcui: string | null}> = [];
+        const results: Array<{name: string, rxcui: string | null}> = [];
         
         // Add local catalog matches first
         const localMatches = catalog
@@ -144,8 +142,8 @@ export function DrugPicker({
         <ul className="absolute z-20 mt-1 max-h-64 w-full overflow-auto rounded border border-ink/20 bg-canvas py-1 text-sm shadow-sm">
           {loading ? (
             <li className="px-3 py-2 text-xs text-ink/50">Searching global database…</li>
-          ) : matches.length > 0 ? (
-            matches.map((d, i) => (
+          ) : visibleMatches.length > 0 ? (
+            visibleMatches.map((d, i) => (
               <li key={i}>
                 <button
                   type="button"

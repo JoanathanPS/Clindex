@@ -1,0 +1,13 @@
+{
+  "name": "@clindex/clinical",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Deterministic patient-aware drug safety engine and evaluation metrics.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

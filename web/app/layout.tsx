@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type LayoutProps from "next";
+import type { ReactNode } from "react";
 import localFont from "next/font/local";
 import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "AI-assisted drug interaction check. Research/educational capstone — not a certified medical device.",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={`${jetbrainsMono.variable} h-full antialiased`}>
       <body className="flex min-h-dvh flex-col bg-canvas text-ink">

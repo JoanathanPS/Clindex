@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  // Workspace packages ship TypeScript source; Next compiles them.
+  transpilePackages: ["@clindex/clinical", "@clindex/ui"],
 };
 
 export default nextConfig;

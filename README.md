@@ -39,10 +39,19 @@ Clindex validates multi-drug regimens against patient physiology (eGFR, hepatic 
 
 ```bash
 git clone https://github.com/JoanathanPS/Clindex.git
-cd Clindex/web
-npm install
-npm run dev
+cd Clindex
+npm install        # installs every workspace from the repo root
+npm run dev        # Next.js app (web/)
+npm test           # engine unit tests
 ```
+
+| Path | What lives there |
+|---|---|
+| `web/` | Next.js app (patient, prescriber, eval routes) |
+| `packages/clinical` | Deterministic safety engine + evaluation metrics (tested) |
+| `packages/ui` | Pokédex design system (device shell, LCD screen, styles) |
+| `supabase/` | Migrations and Edge Functions (AI interview, assessment, Rx image parser) |
+| `docs/strat.md` | Strategy, business model and phased roadmap |
 
 ---
 

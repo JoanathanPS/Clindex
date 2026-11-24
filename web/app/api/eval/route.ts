@@ -1,8 +1,14 @@
 import { NextResponse } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { runManualEngine, type ManualInteraction, type ManualRule } from "@/lib/engines/manual";
-import { computeMetrics, round4, type VerdictRow } from "@/lib/engines/metrics";
+import {
+  computeMetrics,
+  round4,
+  runManualEngine,
+  type ManualInteraction,
+  type ManualRule,
+  type VerdictRow,
+} from "@clindex/clinical";
 
 export const dynamic = "force-dynamic";
 

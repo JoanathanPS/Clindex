@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -41,15 +41,16 @@ export function LoginForm() {
 
   const isBusy = pendingOAuth || pendingOtp;
 
-  // Handle URL auth errors (e.g. redirected from /auth/callback)
-  useEffect(() => {
-    const urlError = searchParams.get("error");
-    if (urlError === "auth-code-error") {
-      setError("Sign-in verification failed or link expired. Please try again.");
-    } else if (urlError) {
-      setError(`Authentication error: ${urlError}`);
-    }
-  }, [searchParams]);
+  // URL auth errors (e.g. redirected from /auth/callback) are derived during
+  // render; a user-triggered error takes precedence.
+  const urlError = searchParams.get("error");
+  const urlErrorMessage =
+    urlError === "auth-code-error"
+      ? "Sign-in verification failed or link expired. Please try again."
+      : urlError
+        ? `Authentication error: ${urlError}`
+        : null;
+  const shownError = error ?? urlErrorMessage;
 
   // 1. Google OAuth
   async function handleGoogleSignIn() {
@@ -204,9 +205,9 @@ export function LoginForm() {
       )}
 
       {/* Error alert */}
-      {error && (
+      {shownError && (
         <p className="rounded border border-danger/40 bg-danger/5 px-3 py-2 text-xs text-danger font-mono">
-          {error}
+          {shownError}
         </p>
       )}
     </div>

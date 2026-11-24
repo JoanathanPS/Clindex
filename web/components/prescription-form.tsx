@@ -6,6 +6,16 @@ import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Field, Select, TextInput } from "@/components/ui/field";
 import { DrugPicker } from "@/components/drug-picker";
+
+/** Shape returned by the parse-prescription-image edge function. */
+interface ExtractedDrug {
+  drug_name: string;
+  rxcui: string | null;
+  dosage: string | null;
+  route?: string | null;
+  confidence?: number;
+  unmatched?: boolean;
+}
 import { PRESCRIPTION_ROUTES, type DrugMapping } from "@/lib/types";
 
 interface DrugRow {
@@ -81,18 +91,18 @@ export function PrescriptionForm({ patientId }: { patientId: string }) {
         }
 
         const data = await res.json();
-        const extracted = data.drugs || [];
+        const extracted: ExtractedDrug[] = data.drugs || [];
         
         if (extracted.length === 0) {
           throw new Error("No drugs found in image");
         }
 
-        const newRows = extracted.map((d: any, i: number) => ({
+        const newRows = extracted.map((d: ExtractedDrug, i: number) => ({
           key: Date.now() + i,
           name: d.drug_name,
           rxcui: d.rxcui,
-          dosage: d.dosage,
-          route: PRESCRIPTION_ROUTES.includes(d.route) ? d.route : "oral",
+          dosage: d.dosage ?? "",
+          route: (PRESCRIPTION_ROUTES as readonly string[]).includes(d.route ?? "") ? (d.route as string) : "oral",
           _confidence: d.confidence,
           _unmatched: d.unmatched
         }));
@@ -106,8 +116,8 @@ export function PrescriptionForm({ patientId }: { patientId: string }) {
         });
       };
       reader.readAsDataURL(file);
-    } catch (err: any) {
-      setImageError(err.message);
+    } catch (err: unknown) {
+      setImageError(err instanceof Error ? err.message : String(err));
     } finally {
       setParsingImage(false);
       // reset file input

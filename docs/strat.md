@@ -237,7 +237,7 @@ supabase/
 docs/
   strat.md          This file
 ```
-Tooling: pnpm workspaces + Turborepo, Vitest, Playwright, ESLint, CI on every push.
+Tooling: npm workspaces (Turborepo later if build times demand it), Vitest, Playwright, ESLint, CI on every push.
 
 ### 9.2 Signed Rx token (draft)
 ```
@@ -276,11 +276,12 @@ Remaining balance per item = `qty_authorized − Σ dispense_events.qty`, enforc
 > Order changed from the first draft: the **consumer wedge (scan → check → find)** comes before signed Rx, because it delivers value without any doctor adopting anything. Estimates assume a small student team and are rough.
 
 ### Phase 0 — Foundation (≈2 weeks)
-- [ ] Convert to monorepo (pnpm + Turborepo); move `web/` → `apps/web`
-- [ ] Extract `packages/ui` (Pokédex components + tokens) — app looks identical
-- [ ] Extract `packages/clinical` from `web/lib/engines`; add Vitest
-- [ ] Audit clinical data sources (NLM interaction API discontinued) and document versions
-- [ ] CI: typecheck, lint, test on every push
+- [x] Convert to monorepo — **npm workspaces**; `web/` kept in place so the Vercel root directory keeps working (move to `apps/web` later, together with a Vercel setting change)
+- [x] Extract `packages/ui` (`PokedexDevice` component + `pokedex.css`) — landing page renders identically
+- [x] Extract `packages/clinical` from `web/lib/engines`; add Vitest (18 tests)
+- [x] Audit clinical data sources — live calls use RxNorm `properties`/`approximateTerm`, RxClass and RxTerms (not the discontinued NLM interaction API); interactions come from our seeded tables + Groq-grounded assessment
+- [x] CI: test, typecheck, lint, build on every push (`.github/workflows/ci.yml`)
+- [x] Fix pre-existing lint/type errors (incl. null `dosage` from the image parser)
 - **Exit:** app unchanged visually; CI green; engine has tests.
 
 ### Phase 1 — Wedge: Scan → Check → Find (≈4–6 weeks)
