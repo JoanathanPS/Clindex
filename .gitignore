@@ -33,3 +33,6 @@ Thumbs.db
 .idea/
 .vscode/
 .agents/
+
+# Generated at build time from open data (scripts/build-catalog.mjs)
+web/public/catalog/

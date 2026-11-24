@@ -11,9 +11,12 @@
     "lint": "npm run lint -w web",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "catalog": "npm run catalog -w web",
+    "seed": "node scripts/build-seed.mjs"
   },
   "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16",
     "vitest": "^3.2.4"
   },
   "engines": {

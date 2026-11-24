@@ -226,7 +226,7 @@ packages/
   rx-core/          Rx schema, canonical encoding, Ed25519 sign/verify, QR codec (pure TS, ~100% tested)
   clinical/         Interaction + patient-physiology + MME risk engine (moved from web/lib/engines)
   find/             Basket optimizer, seller adapters, price normaliser (per-unit), substitution rules
-  ask/              RAG pipeline, citation enforcement, red-flag triage, eval suite
+  (ask)             label lookup + grounded Q&A live in web/; triage lives in packages/clinical
   ui/               Pokédex design system (components, tokens) extracted from globals.css
   adapters/
     in/             India: affiliate sellers, ONDC, NPPA, Jan Aushadhi, ABDM/registry
@@ -284,37 +284,43 @@ Remaining balance per item = `qty_authorized − Σ dispense_events.qty`, enforc
 - [x] Fix pre-existing lint/type errors (incl. null `dosage` from the image parser)
 - **Exit:** app unchanged visually; CI green; engine has tests.
 
-### Phase 1 — Wedge: Scan → Check → Find (≈4–6 weeks)
-- [ ] Upgrade `parse-prescription-image` → Paper Bridge v0 (structured items, ambiguity flags)
-- [ ] Salt/composition normalisation + per-unit price model
-- [ ] `packages/find` with India affiliate adapters (top 4–5 sellers) + Jan Aushadhi + NPPA ceiling data
-- [ ] Basket optimizer v0 (cheapest / fastest / one-stop) with pincode, delivery fee, ETA
-- [ ] Commission-blind ranking + disclosure page
-- [ ] Results UI as Pokédex screen; shareable result card
+### Phase 1 — Wedge: Scan → Check → Find ✅ (built Nov 2026, public at `/find`)
+- [x] Medicine catalogue from open data: 246k products, ~15k salt groups (salt + strength + **form incl. SR/MR, dispersible, enteric-coated**), per-unit price, Jan Aushadhi merge — `scripts/build-catalog.mjs`, generated at build time
+- [x] `packages/find`: salt normalisation, pack parsing, catalogue client, price plans (as prescribed / cheapest same-salt / Jan Aushadhi first), multi-seller optimiser (cheapest / fastest / one-stop incl. delivery fees)
+- [x] Seller deep links (Tata 1mg, PharmEasy, Netmeds, Apollo 24|7) + Jan Aushadhi Kendra locator; commission-blind ranking statement
+- [x] Patient-aware check in the browser (seed rules + interactions) with honest "not in reference set" coverage
+- [x] Pincode delivery/stock planner — **simulated offers, clearly labelled** until partner feeds exist
+- [x] Shareable result
+- [ ] Affiliate tags on links (waiting on programme approval)
+- [ ] Live seller prices/stock (affiliate feeds / ONDC / ERP)
+- [ ] Paper Bridge v0 for the public flow (photo → items); the clinician app already parses images
 - **Exit:** 100 real users in one city; median scan→plan < 15s; click-through-to-buy measured.
 
-### Phase 2 — ASK + guided self-care (≈4 weeks)
-- [ ] RAG over trusted sources (labels/leaflets/formularies) with mandatory citations
-- [ ] Refusal on thin context; red-flag triage → CARE routing
-- [ ] Patient-aware answers via `packages/clinical`
-- [ ] Safety eval suite in CI (faithfulness, refusal, red-flag recall)
-- [ ] WhatsApp bot v0 (photo in → plan out)
-- **Exit:** red-flag recall 100% on test set; every factual claim cited.
+### Phase 2 — ASK + guided self-care ✅ core (public at `/ask`)
+- [x] Medicine card: composition, brand count, per-unit price range, cheapest brands, Jan Aushadhi
+- [x] Official label excerpts (openFDA → DailyMed link) fetched in the browser, with source shown
+- [x] Grounded Q&A route `/api/ask` — answers only from the shown label, refuses otherwise (enabled when `GROQ_API_KEY` is set)
+- [x] Red-flag triage for 5 complaints (fever, headache, cold, acidity, diarrhoea) → emergency / doctor / self-care with patient-specific exclusions; every red flag covered by tests
+- [ ] Clinician review of triage content before public launch
+- [ ] Regional languages; WhatsApp bot v0
+- **Exit:** red-flag recall 100% on test set ✅ (unit-tested); every factual claim cited.
 
-### Phase 3 — Signed Rx + ledger (≈4–6 weeks)
-- [ ] `packages/rx-core`: schema, CBOR+base45 codec, Ed25519, property-based tests
-- [ ] Prescriber console: write, sign (passkey), print QR
-- [ ] `dispense()` SQL function, per-item balances, expiry, controlled-online rule
-- [ ] `apps/verify` offline PWA scanner + sync
-- [ ] MedDex wallet with live balances; unfilled-item alerts
-- [ ] Hash-chained audit log
-- **Exit:** demo — doctor signs → Pharmacy A dispenses 1 of 3 → Pharmacy B dispenses rest → re-scan rejected.
+### Phase 3 — Signed Rx + ledger ✅ core (demo at `/rx`)
+- [x] `packages/rx-core`: canonical encoding, Ed25519 sign/verify, key ids, revocation, expiry, salted patient hash, per-item ledger, hash-chained audit (22 tests)
+- [x] Prescriber console (demo): key creation/revocation, write, sign, QR
+- [x] Pharmacy console (demo): QR camera scan / paste, verify, per-item partial dispensing, substitution, controlled-online rule, forgery test
+- [x] `supabase/migrations/0004_rx_ledger.sql`: `dispense_rx_item()` with row lock, balances without pharmacy identity, RLS, DB-side audit chain — **tested on real Postgres (PGlite)**; not yet applied to the live project
+- [x] Auto-generated Schedule H1 register (CSV)
+- [ ] Apply 0004 to Supabase + edge function to register/verify tokens server-side
+- [ ] Prescriber identity verification against the medical-council registry (ABDM HPR)
+- [ ] Offline PWA with background sync; MedDex patient wallet; unfilled-item alerts
+- **Exit:** demo — doctor signs → Pharmacy A dispenses 1 of 3 → Pharmacy B dispenses rest → re-scan rejected ✅ (verified end-to-end in a browser)
 
 ### Phase 4 — Pharmacy network (≈6 weeks, business-led)
-- [ ] Pharmacy console: stock one-tap, reservations, digital H1 register
+- [x] Controlled-substance risk score (MME/day, CDC 2022 factors; opioid + sedative flag) — shown in `/find`
+- [ ] Pharmacy console: stock one-tap, reservations
 - [ ] Stock trust ladder live (ERP/ONDC feed where possible)
 - [ ] Reserve & hold; lead-fee billing
-- [ ] Controlled-substance risk score + soft stops
 - **Exit:** 20–30 partner pharmacies in one pincode cluster; first paid SaaS customer.
 
 ### Phase 5 — Scale (ongoing)

@@ -39,10 +39,8 @@ export async function proxy(request: NextRequest) {
 
     const { pathname } = request.nextUrl;
 
-    const isPublicRoute =
-      pathname === "/" ||
-      pathname.startsWith("/login") ||
-      pathname.startsWith("/auth");
+    const PUBLIC_PREFIXES = ["/login", "/auth", "/find", "/ask", "/rx", "/care", "/catalog", "/api/ask"];
+    const isPublicRoute = pathname === "/" || PUBLIC_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 
     // Only redirect if unauthenticated and attempting to access a protected route
     if (!user && !isPublicRoute) {
@@ -62,6 +60,6 @@ export const config = {
     /*
      * Run on everything except static assets and Next internals.
      */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ttf|woff2?)$).*)",
+    "/((?!_next/static|_next/image|_vercel|favicon.ico|catalog/|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ttf|woff2?|json)$).*)",
   ],
 };

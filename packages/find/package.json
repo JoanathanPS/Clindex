@@ -1,0 +1,13 @@
+{
+  "name": "@clindex/find",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Medicine catalogue, salt normalisation and basket optimisation.",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  }
+}

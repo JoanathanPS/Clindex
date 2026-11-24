@@ -16,11 +16,16 @@
 
 ### Overview
 
-Clindex validates multi-drug regimens against patient physiology (eGFR, hepatic function, age, conditions) to catch adverse drug-drug and drug-disease interactions with zero missed contraindications.
+ClinDex covers the whole medicine journey — **understand it, check it, find it, verify it**.
 
-- **Adaptive Intake**: Queries missing clinical clearance markers before running checks.
-- **Grounded Verification**: Cross-references candidate drugs with RxNorm and OpenFDA to prevent hallucinations.
-- **Tiers & Alternatives**: Categorizes risks into `Avoid`, `Caution`, or `Safe` with evidence-backed substitutes.
+| Door | Route | What it does |
+|---|---|---|
+| **Find** | `/find` | Price the whole prescription across 246k Indian products: same salt + strength + form, cheapest brand, Jan Aushadhi, per-unit price, seller links, pincode delivery planner |
+| **Check** | `/find` | Patient-aware interaction and kidney / pregnancy / age / allergy checks, plus opioid load (MME/day) |
+| **Ask** | `/ask` | Official label excerpts with sources, grounded Q&A, and red-flag triage before any self-care |
+| **Rx** | `/rx` | Ed25519-signed QR prescriptions; per-item dispense ledger that blocks forgery and double-dispensing across pharmacies; hash-chained audit; auto Schedule H1 register |
+| **Care** | `/care` | Emergency routing and free government teleconsultation (eSanjeevani) |
+| Clinician app | `/patients` | Adaptive AI interview + grounded assessment (sign-in) |
 
 ---
 
@@ -41,16 +46,20 @@ Clindex validates multi-drug regimens against patient physiology (eGFR, hepatic 
 git clone https://github.com/JoanathanPS/Clindex.git
 cd Clindex
 npm install        # installs every workspace from the repo root
+npm run catalog    # downloads open data and builds web/public/catalog (once)
 npm run dev        # Next.js app (web/)
-npm test           # engine unit tests
+npm test           # all unit + Postgres ledger tests
 ```
 
 | Path | What lives there |
 |---|---|
 | `web/` | Next.js app (patient, prescriber, eval routes) |
-| `packages/clinical` | Deterministic safety engine + evaluation metrics (tested) |
+| `packages/clinical` | Safety engine, evaluation metrics, MME opioid load, self-care triage |
+| `packages/find` | Salt normalisation, catalogue client, basket and multi-seller optimiser |
+| `packages/rx-core` | Signed prescriptions, dispense ledger, hash-chained audit |
 | `packages/ui` | Pokédex design system (device shell, LCD screen, styles) |
-| `supabase/` | Migrations and Edge Functions (AI interview, assessment, Rx image parser) |
+| `scripts/` | Catalogue and seed builders |
+| `supabase/` | Migrations (incl. `0004_rx_ledger.sql`, tested on PGlite) and Edge Functions |
 | `docs/strat.md` | Strategy, business model and phased roadmap |
 
 ---
@@ -62,5 +71,7 @@ npm test           # engine unit tests
 > **Joanathan Packia Singh** · [Read my résumé →](https://joanathan.in/)
 
 ---
+
+<sub>Medicine data: [Indian Medicine Dataset](https://github.com/junioralive/Indian-Medicine-Dataset) (MIT) and [DawaSaver](https://github.com/SRJ-ai/dawasaver) Jan Aushadhi seed (MIT). MRP snapshots — verify on the pack.</sub>
 
 <sub>⚠️ **Disclaimer**: Research and educational prototype only. Not a certified medical device. Decision support only.</sub>
